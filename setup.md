@@ -18,10 +18,9 @@ least a day in advance of the workshop.  If you encounter problems with the
 installation procedure, ask your workshop organizers via e-mail for assistance so
 you are ready to go as soon as the workshop begins.
 
-### Windows - [Video tutorial][video-windows]
+### Ubuntu for Windows
 
-1. Open [https://www.anaconda.com/download][continuum-windows]
-   with your web browser.
+1. Open Ubnutu for Windows 10
 
 2. Download the Python 3 installer for Windows.
 
@@ -34,9 +33,24 @@ you are ready to go as soon as the workshop begins.
 1. Open [https://www.anaconda.com/download][continuum-mac]
    with your web browser.
 
-2. Download the Python 3 installer for OS X.
+2. Download the Python 3 installer for OS X.  Change the url below to say 32 instead of 64 if you have a 32-bit operating system.
 
-3. Install Python 3 using all of the defaults for installation.
+    ~~~
+    $ wet https://repo.anaconda.com/archive/Anaconda3-2019.03-Linux-x86_64.sh
+    ~~~
+    {: .bash}
+
+
+3. Run the installer.  Read the license agreement and accept the terms when prompted.  At the end of the installer it will ask if it should add it to the path, type "yes" and press enter.
+
+    ~~~
+    $ bash Anaconda3-2019.03-Linux-x86_64.sh
+    ~~~
+    {: .bash}
+
+4. Close and reopen your termina (Ubuntu for Windows). 
+
+5. Check your install by typing `which python`.  It should read `/home/USERNAME/anaconda3/bin/python`.  If not, add anaconda to your path by adding `export PATH=/home/kauff/anaconda3/bin:$PATH"` to the bottom of your `~/.bashrc` file.
 
 ### Linux
 
@@ -93,6 +107,14 @@ To start the notebook, open a terminal or git bash and type the command:
 
 ~~~
 $ jupyter notebook
+~~~
+{: .bash}
+
+
+If you are using Ubuntu for Windows type the command
+
+~~~
+$ jupyter notebook --no-browser
 ~~~
 {: .bash}
 
