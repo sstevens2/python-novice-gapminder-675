@@ -22,18 +22,7 @@ you are ready to go as soon as the workshop begins.
 
 1. Open Ubnutu for Windows 10
 
-2. Download the Python 3 installer for Windows.
-
-3. Double-click the executable and install Python 3 using _MOST_ of the
-   default settings. The only exception is to check the 
-   **Make Anaconda the default Python** option.
-
-### Mac OS X - [Video tutorial][video-mac]
-
-1. Open [https://www.anaconda.com/download][continuum-mac]
-   with your web browser.
-
-2. Download the Python 3 installer for OS X.  Change the url below to say 32 instead of 64 if you have a 32-bit operating system.
+2. Download the Python 3 installer for Windows. Change the url below to say 32 instead of 64 if you have a 32-bit operating system.
 
     ~~~
     $ wet https://repo.anaconda.com/archive/Anaconda3-2019.03-Linux-x86_64.sh
@@ -41,16 +30,25 @@ you are ready to go as soon as the workshop begins.
     {: .bash}
 
 
-3. Run the installer.  Read the license agreement and accept the terms when prompted.  At the end of the installer it will ask if it should add it to the path, type "yes" and press enter.
-
+3. Run the installer by typing the following command. Read the license agreement and accept the terms when prompted.  At the end of the installer it will ask if it should add it to the path, type "yes" and press enter.
+   
     ~~~
     $ bash Anaconda3-2019.03-Linux-x86_64.sh
     ~~~
     {: .bash}
+  
+4. Close and reopen your terminal (Ubuntu for Windows). 
 
-4. Close and reopen your termina (Ubuntu for Windows). 
+5. Check your install by typing `which python`.  It should read `/home/USERNAME/anaconda3/bin/python`.  If not, add anaconda to your path by adding `export PATH=/home/USERNAME/anaconda3/bin:$PATH"` to the bottom of your `~/.bashrc` file.
 
-5. Check your install by typing `which python`.  It should read `/home/USERNAME/anaconda3/bin/python`.  If not, add anaconda to your path by adding `export PATH=/home/kauff/anaconda3/bin:$PATH"` to the bottom of your `~/.bashrc` file.
+### Mac OS X - [Video tutorial][video-mac]
+
+1. Open [https://www.anaconda.com/download][continuum-mac]
+   with your web browser.
+
+2. Download the Python 3 installer for OS X. 
+
+3. Install Python 3 using all of the defaults for installation.
 
 ### Linux
 
