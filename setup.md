@@ -25,7 +25,7 @@ you are ready to go as soon as the workshop begins.
 2. Download the Python 3 installer for Windows. Change the url below to say 32 instead of 64 if you have a 32-bit operating system.
 
     ~~~
-    $ wet https://repo.anaconda.com/archive/Anaconda3-2019.03-Linux-x86_64.sh
+    $ wget https://repo.anaconda.com/archive/Anaconda3-2019.03-Linux-x86_64.sh
     ~~~
     {: .bash}
 
