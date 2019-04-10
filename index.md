@@ -32,7 +32,7 @@ Please note that this lesson uses Python 3 rather than Python 2.
 >
 > 3. Learners must get the gapminder data before class starts:
 >    please download and unzip the file 
->    [python-novice-gapminder-data.zip](https://github.com/brownsarahm/python-novice-gapminder-files/archive/master.zip).
+>    [python-novice-gapminder-data.zip](https://github.com/sstevens2/python-novice-gapminder-files/archive/master.zip).
 >
 >    Please see [the setup instructions]({{ page.root }}/setup/)
 >    for details.
