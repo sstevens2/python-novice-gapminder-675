@@ -38,7 +38,7 @@ Please note that this lesson uses Python 3 rather than Python 2.
 >    for details.
 {: .prereq}
 
-https://github.com/sstevens2/python-novice-gapminder-files/raw/master/675_day2_updates.zip
+
 > ## Updates
 >
 > Each class there maybe updates to the exercises and data.
