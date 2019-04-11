@@ -46,5 +46,4 @@ Please note that this lesson uses Python 3 rather than Python 2.
 >
 >  [Day 2 updates](https://github.com/sstevens2/python-novice-gapminder-files/raw/master/675_day2_updates.zip).
 >
-
 {: .callout}
