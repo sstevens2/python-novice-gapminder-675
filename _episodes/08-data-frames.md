@@ -44,8 +44,8 @@ uniquely identifies its *entry* in the DataFrame.
 *   Can specify location by numerical index analogously to 2D version of character selection in strings.
 
 ~~~
-import pandas
-data = pandas.read_csv('data/gapminder_gdp_europe.csv', index_col='country')
+import pandas as pd
+europe = pd.read_csv('data/gapminder_gdp_europe.csv', index_col='country')
 print(data.iloc[0, 0])
 ~~~
 {: .language-python}
@@ -59,8 +59,8 @@ print(data.iloc[0, 0])
 *   Can specify location by row name analogously to 2D version of dictionary keys.
 
 ~~~
-data = pandas.read_csv('data/gapminder_gdp_europe.csv', index_col='country')
-print(data.loc["Albania", "gdpPercap_1952"])
+europe = pd.read_csv('data/gapminder_gdp_europe.csv', index_col='country')
+print(europe.loc["Albania", "gdpPercap_1952"])
 ~~~
 {: .language-python}
 ~~~
@@ -72,7 +72,7 @@ print(data.loc["Albania", "gdpPercap_1952"])
 *   Just like Python's usual slicing notation.
 
 ~~~
-print(data.loc["Albania", :])
+print(europe.loc["Albania", :])
 ~~~
 {: .language-python}
 ~~~
@@ -92,10 +92,10 @@ Name: Albania, dtype: float64
 ~~~
 {: .output}
 
-*   Would get the same result printing `data.loc["Albania"]` (without a second index).
+*   Would get the same result printing `europe.loc["Albania"]` (without a second index).
 
 ~~~
-print(data.loc[:, "gdpPercap_1952"])
+print(europe.loc[:, "gdpPercap_1952"])
 ~~~
 {: .language-python}
 ~~~
@@ -111,13 +111,13 @@ Name: gdpPercap_1952, dtype: float64
 ~~~
 {: .output}
 
-*   Would get the same result printing `data["gdpPercap_1952"]`
-*   Also get the same result printing `data.gdpPercap_1952` (since it's a column name)
+*   Would get the same result printing `europe["gdpPercap_1952"]`
+*   Also get the same result printing `europe.gdpPercap_1952` (since it's a column name)
 
 ## Select multiple columns or rows using `DataFrame.loc` and a named slice.
 
 ~~~
-print(data.loc['Italy':'Poland', 'gdpPercap_1962':'gdpPercap_1972'])
+print(europe.loc['Italy':'Poland', 'gdpPercap_1962':'gdpPercap_1972'])
 ~~~
 {: .language-python}
 ~~~
@@ -144,7 +144,7 @@ everything up to but not including the final index.
 *   E.g., calculate max of a slice.
 
 ~~~
-print(data.loc['Italy':'Poland', 'gdpPercap_1962':'gdpPercap_1972'].max())
+print(europe.loc['Italy':'Poland', 'gdpPercap_1962':'gdpPercap_1972'].max())
 ~~~
 {: .language-python}
 ~~~
@@ -156,7 +156,7 @@ dtype: float64
 {: .output}
 
 ~~~
-print(data.loc['Italy':'Poland', 'gdpPercap_1962':'gdpPercap_1972'].min())
+print(europe.loc['Italy':'Poland', 'gdpPercap_1962':'gdpPercap_1972'].min())
 ~~~
 {: .language-python}
 ~~~
@@ -174,15 +174,15 @@ dtype: float64
 
 ~~~
 # Use a subset of data to keep output readable.
-subset = data.loc['Italy':'Poland', 'gdpPercap_1962':'gdpPercap_1972']
-print('Subset of data:\n', subset)
+subset = europe.loc['Italy':'Poland', 'gdpPercap_1962':'gdpPercap_1972']
+print('Subset of European data:\n', subset)
 
 # Which values were greater than 10000 ?
 print('\nWhere are values large?\n', subset > 10000)
 ~~~
 {: .language-python}
 ~~~
-Subset of data:
+Subset of European data:
              gdpPercap_1962  gdpPercap_1967  gdpPercap_1972
 country
 Italy           8243.582340    10022.401310    12269.273780
@@ -242,86 +242,160 @@ max      13450.401510    16361.876470    18965.055510
 ~~~
 {: .output}
 
+## Advanced subsetting
+
+We can also subset on features of the data.  Let's subset the data into only those countries with higher than average GDP across the whole data set (i.e. all the years).
+
+
+First let's make series (a single pandas data frame column) with the averages for each country.
+
+~~~
+avg_by_country = europe.mean(axis.1)
+avg_by_country.head()
+~~~
+{: .language-python}
+~~~
+country
+Albania                    3255.366633
+Austria                   20411.916279
+Belgium                   19900.758072
+Bosnia and Herzegovina     3484.779069
+Bulgaria                   6384.055172
+dtype: float64
+~~~
+{: .output}
+
+Now let's get the average value across all of the countries.
+~~~
+all_avg = avg_by_country.mean()
+all_avg
+~~~
+{: .language-python}
+~~~
+14469.475533302222
+~~~
+{: .output}
+
+
+Now we can subset the original European dataframe into only those countries with higher than average GDPs.
+~~~
+higher = europe[avg_by_country > all_avg]
+higher.head()
+~~~
+{: .language-python}
+~~~
+         gdpPercap_1952  gdpPercap_1957  gdpPercap_1962  gdpPercap_1967  \
+country                                                                   
+Austria     6137.076492     8842.598030    10750.721110     12834.60240   
+Belgium     8343.105127     9714.960623    10991.206760     13149.04119   
+Denmark     9692.385245    11099.659350    13583.313510     15937.21123   
+Finland     6424.519071     7545.415386     9371.842561     10921.63626   
+France      7029.809327     8662.834898    10560.485530     12999.91766   
+
+         gdpPercap_1972  gdpPercap_1977  gdpPercap_1982  gdpPercap_1987  \
+country                                                                   
+Austria     16661.62560     19749.42230     21597.08362     23687.82607   
+Belgium     16672.14356     19117.97448     20979.84589     22525.56308   
+Denmark     18866.20721     20422.90150     21688.04048     25116.17581   
+Finland     14358.87590     15605.42283     18533.15761     21141.01223   
+France      16107.19171     18292.63514     20293.89746     22066.44214   
+
+         gdpPercap_1992  gdpPercap_1997  gdpPercap_2002  gdpPercap_2007  
+country                                                                  
+Austria     27042.01868     29095.92066     32417.60769     36126.49270  
+Belgium     25575.57069     27561.19663     30485.88375     33692.60508  
+Denmark     26406.73985     29804.34567     32166.50006     35278.41874  
+Finland     20647.16499     23723.95020     28204.59057     33207.08440  
+France      24703.79615     25889.78487     28926.03234     30470.01670  
+~~~
+{: .output}
+
+
 ## Select-Apply-Combine operations
 
 Pandas vectorizing methods and grouping operations are features that provide users 
 much flexibility to analyse their data.
 
 For instance, let's say we want to have a clearer view on how the European countries 
-split themselves according to their GDP.
+split themselves according to their GDP.  
 
-1.  We may have a glance by splitting the countries in two groups during the years surveyed,
-    those who presented a GDP *higher* than the European average and those with a *lower* GDP.
-2.  We then estimate a *wealthy score* based on the historical (from 1962 to 2007) values,
-    where we account how many times a country has participated in the groups of *lower* or *higher* GDP
+Lets first (re)create a Series which tells us if the country is in the higher or lower than the average and add it as a column to the dataframe.
 
 ~~~
-mask_higher = data.apply(lambda x:x>x.mean())
-wealth_score = mask_higher.aggregate('sum',axis=1)/len(data.columns)
-wealth_score
+europe['higher'] = avg_by_country > avg_all
+europe.head()
 ~~~
 {: .language-python}
 ~~~
-country
-Albania                   0.000000
-Austria                   1.000000
-Belgium                   1.000000
-Bosnia and Herzegovina    0.000000
-Bulgaria                  0.000000
-Croatia                   0.000000
-Czech Republic            0.500000
-Denmark                   1.000000
-Finland                   1.000000
-France                    1.000000
-Germany                   1.000000
-Greece                    0.333333
-Hungary                   0.000000
-Iceland                   1.000000
-Ireland                   0.333333
-Italy                     0.500000
-Montenegro                0.000000
-Netherlands               1.000000
-Norway                    1.000000
-Poland                    0.000000
-Portugal                  0.000000
-Romania                   0.000000
-Serbia                    0.000000
-Slovak Republic           0.000000
-Slovenia                  0.333333
-Spain                     0.333333
-Sweden                    1.000000
-Switzerland               1.000000
-Turkey                    0.000000
-United Kingdom            1.000000
-dtype: float64
+                        gdpPercap_1952  gdpPercap_1957  gdpPercap_1962  \
+country                                                                  
+Albania                    1601.056136     1942.284244     2312.888958   
+Austria                    6137.076492     8842.598030    10750.721110   
+Belgium                    8343.105127     9714.960623    10991.206760   
+Bosnia and Herzegovina      973.533195     1353.989176     1709.683679   
+Bulgaria                   2444.286648     3008.670727     4254.337839   
+
+                        gdpPercap_1967  gdpPercap_1972  gdpPercap_1977  \
+country                                                                  
+Albania                    2760.196931     3313.422188     3533.003910   
+Austria                   12834.602400    16661.625600    19749.422300   
+Belgium                   13149.041190    16672.143560    19117.974480   
+Bosnia and Herzegovina     2172.352423     2860.169750     3528.481305   
+Bulgaria                   5577.002800     6597.494398     7612.240438   
+
+                        gdpPercap_1982  gdpPercap_1987  gdpPercap_1992  \
+country                                                                  
+Albania                    3630.880722     3738.932735     2497.437901   
+Austria                   21597.083620    23687.826070    27042.018680   
+Belgium                   20979.845890    22525.563080    25575.570690   
+Bosnia and Herzegovina     4126.613157     4314.114757     2546.781445   
+Bulgaria                   8224.191647     8239.854824     6302.623438   
+
+                        gdpPercap_1997  gdpPercap_2002  gdpPercap_2007  higher  
+country                                                                         
+Albania                    3193.054604     4604.211737     5937.029526   False  
+Austria                   29095.920660    32417.607690    36126.492700    True  
+Belgium                   27561.196630    30485.883750    33692.605080    True  
+Bosnia and Herzegovina     4766.355904     6018.975239     7446.298803   False  
+Bulgaria                   5970.388760     7696.777725    10680.792820   False  
 ~~~
 {: .output}
 
-Finally, for each group in the `wealth_score` table, we sum their (financial) contribution
-across the years surveyed:
+Next we can group the countries by those which have higher than average GDPs and those which have lower than average GDPs and calculate the average for each group.
 
 ~~~
-data.groupby(wealth_score).sum()
+europe.groupby('higher').mean()
 ~~~
 {: .language-python}
 ~~~
-          gdpPercap_1952  gdpPercap_1957  gdpPercap_1962  gdpPercap_1967  \
-0.000000    36916.854200    46110.918793    56850.065437    71324.848786   
-0.333333    16790.046878    20942.456800    25744.935321    33567.667670   
-0.500000    11807.544405    14505.000150    18380.449470    21421.846200   
-1.000000   104317.277560   127332.008735   149989.154201   178000.350040   
+        gdpPercap_1952  gdpPercap_1957  gdpPercap_1962  gdpPercap_1967  \
+higher                                                                   
+False      3460.797562     4356.915102     5381.266911     6789.774524   
+True       8175.640146     9941.410203    11776.023847    13977.022879   
 
-          gdpPercap_1972  gdpPercap_1977  gdpPercap_1982  gdpPercap_1987  \
-0.000000    88569.346898   104459.358438   113553.768507   119649.599409   
-0.333333    45277.839976    53860.456750    59679.634020    64436.912960   
-0.500000    25377.727380    29056.145370    31914.712050    35517.678220   
-1.000000   215162.343140   241143.412730   263388.781960   296825.131210   
+        gdpPercap_1972  gdpPercap_1977  gdpPercap_1982  gdpPercap_1987  \
+higher                                                                   
+False      8589.054224    10123.062167    10999.519354    11657.755578   
+True      16925.884987    19039.312758    20896.041919    23564.659468   
 
-          gdpPercap_1992  gdpPercap_1997  gdpPercap_2002  gdpPercap_2007  
-0.000000    92380.047256   103772.937598   118590.929863   149577.357928  
-0.333333    67918.093220    80876.051580   102086.795210   122803.729520  
-0.500000    36310.666080    40723.538700    45564.308390    51403.028210  
-1.000000   315238.235970   346930.926170   385109.939210   427850.333420
+        gdpPercap_1992  gdpPercap_1997  gdpPercap_2002  gdpPercap_2007  
+higher                                                                  
+False      9814.771634    11010.972268    12762.305369    15908.649976  
+True      25343.621170    28294.849840    31939.649055    35506.860676
+~~~
+{: .output}
+
+This still gives us the averages for each group by year. To combine those values we can take the mean across all of the years for each group.
+
+~~~
+europe.groupby('higher').mean().mean(axis=1)
+~~~
+{: .language-python}
+~~~
+higher
+False     9237.903722
+True     20448.414746
+dtype: float64
 ~~~
 {: .output}
 
