@@ -48,3 +48,14 @@ Please note that this lesson uses Python 3 rather than Python 2.
 > - [Day 3 updates](https://github.com/sstevens2/python-novice-gapminder-files/raw/master/675_day3_updates.zip)
 >
 {: .callout}
+
+> ## Cheatsheets
+>
+> Below are some _hopefully_ good cheatsheets for python, pandas, and jupyter.
+>
+>  - [Beginner Python Cheatsheet](https://github.com/ehmatthes/pcc/blob/master/cheat_sheets/beginners_python_cheat_sheet_pcc_all.pdf)
+> - [Pandas](https://github.com/pandas-dev/pandas/blob/master/doc/cheatsheet/Pandas_Cheat_Sheet.pdf)
+> - [Jupter Notebook](https://www.cheatography.com/jorgejuan007/cheat-sheets/jupyter-notebook-editor/pdf/)
+>
+{: .callout}
+
