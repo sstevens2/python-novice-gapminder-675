@@ -46,6 +46,7 @@ Please note that this lesson uses Python 3 rather than Python 2.
 >
 >  - [Day 2 updates](https://github.com/sstevens2/python-novice-gapminder-files/raw/master/675_day2_updates.zip)
 > - [Day 3 updates](https://github.com/sstevens2/python-novice-gapminder-files/raw/master/675_day3_updates.zip)
+> - [Day 6 Download](ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCA/000/009/065/GCA_000009065.1_ASM906v1)
 >
 {: .callout}
 
